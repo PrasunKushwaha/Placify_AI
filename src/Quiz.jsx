@@ -4,6 +4,10 @@ import { BiCompass } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
 
 function Quiz() {
+
+    const trophiesDataString = localStorage.getItem("my_trophies") || "0";
+    const mytrophies = JSON.parse(trophiesDataString);
+    
   const [questionTemplate, setQuestionTemplate] = useState(`you are a quiz master. Generate 5 {category} questions with 4 multiple choice answers for a {skillLevel} skill level. Also provide the answer separately. The response should be in the following json format: {"questions": [{"id": 0, "question": "", "options": [], "answer": ""},...]} (do not add anything out of format. KEEP THE RESPONSE IN THE GIVEN FORMAT)`);
   const [category, setCategory] = useState("aptitude");
   const [skillLevel, setSkillLevel] = useState("beginner");
@@ -18,7 +22,7 @@ function Quiz() {
   const [quizFinished, setQuizFinished] = useState(false);
   const [userAnswers, setUserAnswers] = useState([]);
   const [timer, setTimer] = useState(0);
-  const [trophies, setTrophies] = useState(0);  // New state for cumulative score
+  const [trophies, setTrophies] = useState(mytrophies);  // New state for cumulative score
 
   async function generateAnswer(e) {
     setGeneratingAnswer(true);
@@ -90,6 +94,8 @@ function Quiz() {
       setQuizFinished(true);
       setQuizStarted(false);
       setTrophies(trophies + score);  // Update cumulative trophies
+      const trophiesString = JSON.stringify(trophies + score);
+      localStorage.setItem("my_trophies", trophiesString);
     }
   };
 
@@ -99,7 +105,6 @@ function Quiz() {
     setUserAnswers(updatedAnswers);
     setQuizFinished(true);
     setQuizStarted(false);
-    setTrophies(trophies + score);  // Update cumulative trophies
   };
 
   const handleCategoryChange = (e) => {
@@ -117,18 +122,18 @@ function Quiz() {
   };
 
   return (
-    <div className="min-h-screen p-5 bg-gray-100">
-      <div className="max-w-4xl p-6 mx-auto bg-white rounded-lg shadow-md animate__animated animate__fadeIn">
-        <h1 className="mb-6 text-3xl font-extrabold text-center text-indigo-600">Quiz Generator</h1>
+    <div className="min-h-screen p-5 bg-gray-900">
+      <div className="max-w-4xl p-6 mx-auto bg-gray-800 rounded-lg shadow-md animate__animated animate__fadeIn">
+        <h1 className="mb-6 text-3xl font-extrabold text-center text-indigo-400">Quiz Generator</h1>
         <form onSubmit={generateAnswer} className="mb-6 space-y-4">
           <div className="flex justify-between">
             <div className="w-1/2 pr-2">
-              <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category</label>
+              <label htmlFor="category" className="block text-sm font-medium text-gray-300">Category</label>
               <select
                 name="category"
                 id="category"
                 onChange={handleCategoryChange}
-                className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                className="block w-full mt-1 text-white bg-gray-700 border-gray-600 rounded-md shadow-sm focus:border-indigo-400 focus:ring-indigo-400 sm:text-sm"
               >
                 <option value="aptitude">Aptitude & Reasoning</option>
                 <option value="civil">Civil Engineering</option>
@@ -138,12 +143,12 @@ function Quiz() {
               </select>
             </div>
             <div className="w-1/2 pl-2">
-              <label htmlFor="skillLevel" className="block text-sm font-medium text-gray-700">Skill Level</label>
+              <label htmlFor="skillLevel" className="block text-sm font-medium text-gray-300">Skill Level</label>
               <select
                 name="skillLevel"
                 id="skillLevel"
                 onChange={handleSkillLevelChange}
-                className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                className="block w-full mt-1 text-white bg-gray-700 border-gray-600 rounded-md shadow-sm focus:border-indigo-400 focus:ring-indigo-400 sm:text-sm"
               >
                 <option value="beginner">Beginner</option>
                 <option value="intermediate">Intermediate</option>
@@ -153,26 +158,26 @@ function Quiz() {
           </div>
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 animate__animated animate__pulse"
+            className="w-full px-4 py-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 animate__animated animate__pulse"
             disabled={generatingAnswer}
           >
             Generate
           </button>
         </form>
-        {loading && <BiCompass className="m-auto text-3xl text-indigo-600 animate-spin animate__animated animate__rotateIn" />}
+        {loading && <BiCompass className="m-auto text-3xl text-indigo-400 animate-spin animate__animated animate__rotateIn" />}
         {questionsGenerated && !loading && (
           <button
             onClick={startQuiz}
-            className="w-full px-4 py-2 mb-4 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 animate__animated animate__fadeIn"
+            className="w-full px-4 py-2 mb-4 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 animate__animated animate__fadeIn"
           >
             {quizFinished ? "Restart Quiz" : "Start Quiz"}
           </button>
         )}
         {quizFinished && (
           <div className="text-center animate__animated animate__fadeIn">
-            <p className="text-2xl font-semibold text-green-600">Quiz Finished</p>
-            <p className="text-lg">Your score: {score}/{questions.length}</p>
-            <p className="text-lg">Total trophies: {trophies}</p>  {/* Display total trophies */}
+            <p className="text-2xl font-semibold text-green-400">Quiz Finished</p>
+            <p className="text-lg text-white">Your score: {score}/{questions.length}</p>
+            <p className="text-lg text-white">Total trophies: {trophies}</p>  {/* Display total trophies */}
             <div className="flex justify-center mt-4 space-x-2">
               {userAnswers.map((isCorrect, index) => (
                 <div
@@ -186,9 +191,9 @@ function Quiz() {
         {quizStarted && !quizFinished && (
           <div className="animate__animated animate__fadeIn">
             <div className="flex items-center mb-4">
-              <h2 className="text-xl font-bold text-gray-800">{questions[currentQuestionIndex].question}</h2>
+              <h2 className="text-xl font-bold text-gray-300">{questions[currentQuestionIndex].question}</h2>
               <AiOutlineSearch
-                className="ml-2 text-2xl cursor-pointer hover:text-gray-600"
+                className="ml-2 text-2xl cursor-pointer hover:text-gray-400"
                 onClick={handleSearchHint}
               />
             </div>
@@ -197,14 +202,14 @@ function Quiz() {
                 <button
                   key={index}
                   onClick={() => handleAnswer(option)}
-                  className="w-full px-4 py-2 text-gray-800 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 animate__animated animate__bounceIn"
+                  className="w-full px-4 py-2 text-gray-900 bg-gray-300 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 animate__animated animate__bounceIn"
                 >
                   {option}
                 </button>
               ))}
             </div>
             <div className="mt-4 text-center">
-              <p className="text-lg font-bold text-gray-800">Time remaining: {timer} seconds</p>
+              <p className="text-lg font-bold text-gray-300">Time remaining: {timer} seconds</p>
             </div>
           </div>
         )}
