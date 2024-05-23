@@ -139,7 +139,7 @@ function Quiz() {
                 <option value="civil">Civil Engineering</option>
                 <option value="mech">Mechanical Engineering</option>
                 <option value="electronics">Electronics Engineering</option>
-                <option value="computer">Computer Science</option>
+                <option value="software">Software</option>
               </select>
             </div>
             <div className="w-1/2 pl-2">

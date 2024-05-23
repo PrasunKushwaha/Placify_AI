@@ -6,6 +6,7 @@ import JobInterview from "./JobInterview";
 import LandingPage from "./LandngPage";
 import Navbar from "./Navbar";
 import Quiz from "./Quiz";
+import Coach from "./Coach.jsx";
 
 function App() {
   return(
@@ -18,6 +19,7 @@ function App() {
   <Route path="/feedbackForm" element={<FeedbackForm/>}></Route>
   <Route path="/quiz" element={<Quiz/>}></Route>
   <Route path="/jobInterview" element={<JobInterview/>}></Route>
+  <Route path="/coach" element={<Coach/>}></Route>
   
  </Routes>
   <Footer/>
