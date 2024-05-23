@@ -18,6 +18,7 @@ function Quiz() {
   const [quizFinished, setQuizFinished] = useState(false);
   const [userAnswers, setUserAnswers] = useState([]);
   const [timer, setTimer] = useState(0);
+  const [trophies, setTrophies] = useState(0);  // New state for cumulative score
 
   async function generateAnswer(e) {
     setGeneratingAnswer(true);
@@ -88,6 +89,7 @@ function Quiz() {
     } else {
       setQuizFinished(true);
       setQuizStarted(false);
+      setTrophies(trophies + score);  // Update cumulative trophies
     }
   };
 
@@ -97,6 +99,7 @@ function Quiz() {
     setUserAnswers(updatedAnswers);
     setQuizFinished(true);
     setQuizStarted(false);
+    setTrophies(trophies + score);  // Update cumulative trophies
   };
 
   const handleCategoryChange = (e) => {
@@ -169,6 +172,7 @@ function Quiz() {
           <div className="text-center animate__animated animate__fadeIn">
             <p className="text-2xl font-semibold text-green-600">Quiz Finished</p>
             <p className="text-lg">Your score: {score}/{questions.length}</p>
+            <p className="text-lg">Total trophies: {trophies}</p>  {/* Display total trophies */}
             <div className="flex justify-center mt-4 space-x-2">
               {userAnswers.map((isCorrect, index) => (
                 <div
