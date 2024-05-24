@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import { useFormik } from "formik";
@@ -6,7 +6,9 @@ import * as Yup from "yup";
 import axios from "axios";
 import 'animate.css';
 
-function Login({ setUser }) {
+function Login() {
+  const [user, setUser] = useState(null);
+
   function callLoginApi(values, bag) {
     console.log("calling api", values.email, values.password);
     axios
@@ -18,13 +20,16 @@ function Login({ setUser }) {
         console.log(response.data);
         const { user, token } = response.data;
         localStorage.setItem("token", token);
-        console.log(bag);
-        console.log(token);
+        console.log("Formik bag:", bag);
+        console.log("Token:", token);
 
-        bag.props.setUser(user);
+        // Log full name
+        console.log("Full Name:", user.full_name);
+
+        setUser(user);
       })
       .catch(() => {
-        console.log("invalid Credentials");
+        console.log("Invalid Credentials");
       });
   }
 
@@ -119,6 +124,17 @@ function Login({ setUser }) {
             <Link to={'/signup'} className="text-sm text-indigo-500 hover:text-indigo-700">Don't have an account?</Link>
           </div>
         </form>
+
+        <div className="mt-4">
+          {user ? (
+            <div className="text-sm font-medium text-gray-300">Welcome, {user.full_name}</div>
+          ) : (
+            <div className="flex justify-end space-x-4">
+              <Link to={'/login'} className="text-sm text-indigo-500 hover:text-indigo-700">Log In</Link>
+              <Link to={'/signup'} className="text-sm text-indigo-500 hover:text-indigo-700">Sign Up</Link>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
