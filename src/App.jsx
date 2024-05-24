@@ -15,6 +15,8 @@ import Signup from "./Signup";
 
 function App() {
   const [trophies, setTrophies] = useState(0);
+  const [user, setUser] = useState()
+console.log('logged in user is:',user)
 
   useEffect(() => {
     const trophiesDataString = localStorage.getItem("my_trophies") || "0";
@@ -32,7 +34,7 @@ function App() {
         <Route path="/quiz" element={<Quiz />} />
         <Route path="/jobInterview" element={<JobInterview />} />
         <Route path="/coach" element={<Coach />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login setUser={setUser} />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgotpass" element={<Forgotpass />} />
       </Routes>
