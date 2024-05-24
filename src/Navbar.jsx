@@ -7,7 +7,7 @@ function Navbar({ trophies }) {
         <nav className="bg-white border-gray-200 dark:bg-gray-900">
             <div className="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto">
                 <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Placify-AI Logo" />
+                    <img src="https://media.discordapp.net/attachments/777095273490546712/1222413448135180348/Placify.png?ex=6650cafd&is=664f797d&hm=7abe2f48969673c91da98f8e7118ed718cb43ab580892c6e3cabdb41d7116c3b&=&format=webp&quality=lossless&width=625&height=625" className="h-16" alt="Placify-AI Logo" />
                     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Placify-AI</span>
                 </Link>
                 <div className="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">

@@ -13,7 +13,7 @@ function Footer(){
         <div class="md:flex md:justify-between">
           <div class="mb-6 md:mb-0">
               <a href="https://placify-ai.netlify.app/" class="flex items-center">
-                  <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 me-3" alt="FlowBite Logo" />
+                  <img src="https://media.discordapp.net/attachments/777095273490546712/1222413448135180348/Placify.png?ex=6650cafd&is=664f797d&hm=7abe2f48969673c91da98f8e7118ed718cb43ab580892c6e3cabdb41d7116c3b&=&format=webp&quality=lossless&width=625&height=625" class="h-16 me-3" alt="FlowBite Logo" />
                   <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Placify-AI</span>
               </a>
           </div>
