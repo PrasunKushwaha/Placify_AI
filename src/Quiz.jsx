@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { BiCompass } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
 import { ImTrophy } from "react-icons/im";
 
-function Quiz() {
+function Quiz({ setTrophies }) { // Receive setTrophies function
   const [questionTemplate, setQuestionTemplate] = useState(`you are a quiz master. Generate 5 {category} questions with 4 multiple choice answers for a {skillLevel} skill level. Also provide the answer separately. The response should be in the following json format: {"questions": [{"id": 0, "question": "", "options": [], "answer": ""},...]} (do not add anything out of format. KEEP THE RESPONSE IN THE GIVEN FORMAT)`);
   const [category, setCategory] = useState("aptitude");
   const [skillLevel, setSkillLevel] = useState("beginner");
@@ -19,17 +19,17 @@ function Quiz() {
   const [quizFinished, setQuizFinished] = useState(false);
   const [userAnswers, setUserAnswers] = useState([]);
   const [timer, setTimer] = useState(0);
-  const [trophies, setTrophies] = useState(getStoredTrophies()); // Retrieve trophies from local storage
 
-  useEffect(() => {
-    // Update local storage whenever trophies change
-    localStorage.setItem("my_trophies", JSON.stringify(trophies));
-  }, [trophies]);
+  // Function to update trophies and call it whenever new trophies are earned
+  const updateTrophies = (earnedTrophies) => {
+    setTrophies((prevTrophies) => prevTrophies + earnedTrophies);
+  };
 
-  function getStoredTrophies() {
+  // Function to retrieve stored trophies from localStorage
+  const getStoredTrophies = () => {
     const trophiesDataString = localStorage.getItem("my_trophies") || "0";
     return JSON.parse(trophiesDataString);
-  }
+  };
 
   async function generateAnswer(e) {
     setGeneratingAnswer(true);

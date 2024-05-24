@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import AboutPage from "./AboutPage";
 import FeedbackForm from "./FeedbackForm";
@@ -12,15 +12,8 @@ import Forgotpass from "./Forgotpass";
 import Login from "./Login";
 import Signup from "./Signup";
 
-
 function App() {
   const [trophies, setTrophies] = useState(0);
-
-  useEffect(() => {
-    const trophiesDataString = localStorage.getItem("my_trophies") || "0";
-    const mytrophies = JSON.parse(trophiesDataString);
-    setTrophies(mytrophies);
-  }, []);
 
   return (
     <>
@@ -29,7 +22,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/aboutPage" element={<AboutPage />} />
         <Route path="/feedbackForm" element={<FeedbackForm />} />
-        <Route path="/quiz" element={<Quiz />} />
+        <Route path="/quiz" element={<Quiz setTrophies={setTrophies} />} /> {/* Pass setTrophies function */}
         <Route path="/jobInterview" element={<JobInterview />} />
         <Route path="/coach" element={<Coach />} />
         <Route path="/login" element={<Login />} />
