@@ -2,12 +2,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { BiCompass } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
+import { ImTrophy } from "react-icons/im";
 
 function Quiz() {
-
-    const trophiesDataString = localStorage.getItem("my_trophies") || "0";
-    const mytrophies = JSON.parse(trophiesDataString);
-    
   const [questionTemplate, setQuestionTemplate] = useState(`you are a quiz master. Generate 5 {category} questions with 4 multiple choice answers for a {skillLevel} skill level. Also provide the answer separately. The response should be in the following json format: {"questions": [{"id": 0, "question": "", "options": [], "answer": ""},...]} (do not add anything out of format. KEEP THE RESPONSE IN THE GIVEN FORMAT)`);
   const [category, setCategory] = useState("aptitude");
   const [skillLevel, setSkillLevel] = useState("beginner");
@@ -22,7 +19,17 @@ function Quiz() {
   const [quizFinished, setQuizFinished] = useState(false);
   const [userAnswers, setUserAnswers] = useState([]);
   const [timer, setTimer] = useState(0);
-  const [trophies, setTrophies] = useState(mytrophies);  // New state for cumulative score
+  const [trophies, setTrophies] = useState(getStoredTrophies()); // Retrieve trophies from local storage
+
+  useEffect(() => {
+    // Update local storage whenever trophies change
+    localStorage.setItem("my_trophies", JSON.stringify(trophies));
+  }, [trophies]);
+
+  function getStoredTrophies() {
+    const trophiesDataString = localStorage.getItem("my_trophies") || "0";
+    return JSON.parse(trophiesDataString);
+  }
 
   async function generateAnswer(e) {
     setGeneratingAnswer(true);
@@ -93,9 +100,8 @@ function Quiz() {
     } else {
       setQuizFinished(true);
       setQuizStarted(false);
-      setTrophies(trophies + score);  // Update cumulative trophies
-      const trophiesString = JSON.stringify(trophies + score);
-      localStorage.setItem("my_trophies", trophiesString);
+      const earnedTrophies = score; // Trophies earned in this quiz session
+      setTrophies(prevTrophies => prevTrophies + earnedTrophies);  // Update cumulative trophies
     }
   };
 
@@ -177,7 +183,11 @@ function Quiz() {
           <div className="text-center animate__animated animate__fadeIn">
             <p className="text-2xl font-semibold text-green-400">Quiz Finished</p>
             <p className="text-lg text-white">Your score: {score}/{questions.length}</p>
-            <p className="text-lg text-white">Total trophies: {trophies}</p>  {/* Display total trophies */}
+            <div className="flex items-center justify-center mt-2">
+              <p className="mr-1 text-lg font-semibold text-white">{score}</p>
+              <ImTrophy className="text-yellow-400" />
+              <p className="ml-1 text-lg font-semibold text-white">+</p>
+            </div>
             <div className="flex justify-center mt-4 space-x-2">
               {userAnswers.map((isCorrect, index) => (
                 <div
