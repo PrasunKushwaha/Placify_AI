@@ -8,6 +8,10 @@ import LandingPage from "./LandingPage";
 import Navbar from "./Navbar";
 import Quiz from "./Quiz";
 import Coach from "./Coach";
+import Forgotpass from "./Forgotpass";
+import Login from "./Login";
+import Signup from "./Signup";
+
 
 function App() {
   const [trophies, setTrophies] = useState(0);
@@ -28,6 +32,9 @@ function App() {
         <Route path="/quiz" element={<Quiz />} />
         <Route path="/jobInterview" element={<JobInterview />} />
         <Route path="/coach" element={<Coach />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/forgotpass" element={<Forgotpass />} />
       </Routes>
       <Footer />
     </>

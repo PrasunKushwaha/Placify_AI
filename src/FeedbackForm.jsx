@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import 'animate.css';
 
 function FeedbackForm() {
-    const [formData, setFormData] = useState({
+       const [formData, setFormData] = useState({
         name: '',
         email: '',
         rating: '',
@@ -18,8 +18,15 @@ function FeedbackForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Feedback submitted:', formData);
-        // Add your form submission logic here
+
+        emailjs.sendForm('service_kn7re4b', 'YOUR_TEMPLATE_ID', e.target, 'YOUR_USER_ID')
+            .then((result) => {
+                console.log('Email sent successfully:', result.text);
+                // Add your success message or redirect logic here
+            }, (error) => {
+                console.error('Error sending email:', error.text);
+                // Add your error handling logic here
+            });
     };
 
     return (
